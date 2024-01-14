@@ -35,18 +35,35 @@ const HomePage = () => {
     setFile(selectedFile);
   };
 
-  const handleSubmit = (e) => {
-    
-    e.preventDefault(); // Prevent form submission (for demonstration purposes)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    // Perform any necessary actions (e.g., form validation)
-    // TODO check whether all values are filled, except for file
-    // if file is not selected, the api call shoudld go on, with file variable as none
-    
-    // api call http package
-    
-    // Then, navigate to the Results page
-    history.push('/results');
+    // Check if all required values are filled
+    if (!height || !weight || !age || !gender || !description) {
+      alert('Please fill in all the details');
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('height', height);
+      formData.append('weight', weight);
+      formData.append('age', age);
+      formData.append('gender', gender);
+      formData.append('description', description);
+      formData.append('file', file);
+
+      // Make the API call using axios
+      const response = await axios.post('YOUR_API_ENDPOINT', formData);
+
+      // Handle the API response as needed
+      console.log('API Response:', response.data);
+
+      // Navigate to the Results page
+      history.push('/results');
+    } catch (error) {
+      console.error('API Error:', error);
+    }
   };
  
 
