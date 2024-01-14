@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom'; // Import useHistory
-import './homePage.css';
-import Header from './header';
 import Footer from './footer';
-import Results from './results';
+import Header from './header';
+import './homePage.css';
 
 const HomePage = () => {
   const [name] = useState('Nidarshana');
@@ -21,6 +20,15 @@ const HomePage = () => {
   const handleWeightChange = (e) => {
     setWeight(e.target.value);
   };
+  const handleAgeChange = (e) => {
+    setAge(e.target.value);
+  };
+  const handleGendertChange = (e) => {
+    setGender(e.target.value);
+  };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -28,16 +36,19 @@ const HomePage = () => {
   };
 
   const handleSubmit = (e) => {
+    
     e.preventDefault(); // Prevent form submission (for demonstration purposes)
 
     // Perform any necessary actions (e.g., form validation)
-    if (!file) {
-      alert("Please upload a file before submitting."); // Show a pop-up message
-      return; // Don't proceed with the submission
-    }
+    // TODO check whether all values are filled, except for file
+    // if file is not selected, the api call shoudld go on, with file variable as none
+    
+    // api call http package
+    
     // Then, navigate to the Results page
     history.push('/results');
   };
+ 
 
   return (
     <div>
@@ -63,7 +74,7 @@ const HomePage = () => {
                         <label htmlFor="height">Height (cm):</label>
                       </td>
                       <td>
-                        <input type="text" id="height" value={height} onChange={handleHeightChange} />
+                        <input type="number" id="height" value={height} onChange={handleHeightChange} />
                       </td>
                     </tr>
                     <br></br>
@@ -72,13 +83,41 @@ const HomePage = () => {
                         <label htmlFor="weight">Weight (kg):</label>
                       </td>
                       <td>
-                        <input type="text" id="weight" value={weight} onChange={handleWeightChange} />
+                        <input type="number" id="weight" value={weight} onChange={handleWeightChange} />
                       </td>
                     </tr>
                     <br></br>
                     <tr>
                       <td>
-                        <label htmlFor="file">Upload Report:</label>
+                        <label htmlFor="Age">Age :</label>
+                      </td>
+                      <td>
+                        <input type="number" id="age" value={age} onChange={handleAgeChange} />
+                      </td>
+                    </tr>
+                    <br></br>
+                    <tr>
+                      <td>
+                        <label htmlFor="gender">Gender :</label>
+                      </td>
+                      <td>
+                        <input type="radio" name ="gender" id="gender" value={Male} onChange={handleGendertChange} />
+                        <input type="radio" name ="gender" id="gender" value={Female} onChange={handleGenderChange} />
+                      </td>
+                    </tr>
+                    <br></br>
+                    <tr>
+                      <td>
+                        <label htmlFor="description">Description:</label>
+                      </td>
+                      <td>
+                        <input type="text" id="description" value={description} onChange={handleDescriptionChange} />
+                      </td>
+                    </tr>
+                    <br></br>
+                    <tr>
+                      <td>
+                        <label htmlFor="file">Upload Report (optional) :</label>
                       </td>
                       <td>
                         <input type="file" id="file" onChange={handleFileChange} />
@@ -87,7 +126,7 @@ const HomePage = () => {
                   </tbody>
                 </table>
                 <br></br>
-                <button type="submit">Submit</button>
+                <button type="submit" >Submit</button>
               </form>
             </div>
           </div>
